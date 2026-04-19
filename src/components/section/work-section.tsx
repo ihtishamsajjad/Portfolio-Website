@@ -44,7 +44,7 @@ export default function WorkSection() {
               <div className="flex items-center gap-x-3 flex-1 min-w-0">
                 <LogoImage src={work.logoUrl} alt={work.company} />
                 <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
-                  <div className="font-semibold leading-none flex items-center gap-2">
+                  <div className="font-semibold leading-none flex items-center gap-2 max-[450px]:text-sm">
                     {work.company}
                     <span className="relative inline-flex items-center w-3.5 h-3.5">
                       <ChevronRight
@@ -64,19 +64,19 @@ export default function WorkSection() {
                       />
                     </span>
                   </div>
-                  <div className="font-sans text-sm text-muted-foreground">
+                  <div className="font-sans text-sm text-muted-foreground max-[450px]:text-xs">
                     {work.title}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+              <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none max-[450px]:text-[10px]">
                 <span>
                   {work.start} - {work.end ?? "Present"}
                 </span>
               </div>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="p-0 ml-13 text-xs sm:text-sm text-muted-foreground">
+          <AccordionContent className="p-0 ml-13 max-[450px]:ml-11 text-xs max-[450px]:text-[11px] sm:text-sm text-muted-foreground">
             {work.description}
           </AccordionContent>
         </AccordionItem>

@@ -234,3 +234,9 @@
   }
 
 }
+
+/* Hide the Next.js development floating button ("N") */
+button[aria-label="Open Next.js Dev Tools"],
+[data-nextjs-dev-tools-button] {
+  display: none !important;
+}

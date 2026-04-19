@@ -19,7 +19,7 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="w-full h-48 object-cover"
+      className="w-full h-48 object-cover transition-transform duration-300 ease-out will-change-transform group-hover:scale-105 hover:scale-105"
       onError={() => setImageError(true)}
     />
   );
@@ -57,11 +57,11 @@ export function ProjectCard({
   return (
     <div
       className={cn(
-        "flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
+        "group flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
         className
       )}
     >
-      <div className="relative shrink-0">
+      <div className="relative shrink-0 overflow-hidden">
         <Link
           href={href || "#"}
           target="_blank"
@@ -75,7 +75,15 @@ export function ProjectCard({
               loop
               muted
               playsInline
-              className="w-full h-48 object-cover"
+              preload="metadata"
+              className="w-full h-48 object-cover transition-transform duration-300 ease-out will-change-transform group-hover:scale-105 hover:scale-105"
+              onCanPlay={(e) => {
+                void e.currentTarget.play().catch(() => {});
+              }}
+              onEnded={(e) => {
+                e.currentTarget.currentTime = 0;
+                void e.currentTarget.play().catch(() => {});
+              }}
             />
           ) : image ? (
             <ProjectImage src={image} alt={title} />

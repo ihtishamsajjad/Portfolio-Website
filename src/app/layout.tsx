@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import ScrollToHeroButton from "@/components/scroll-to-hero-button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
@@ -64,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={cn(
           "min-h-screen bg-background font-sans antialiased relative",
           geist.variable,
@@ -86,6 +88,7 @@ export default function RootLayout({
             <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
               {children}
             </div>
+            <ScrollToHeroButton />
             <Navbar />
           </TooltipProvider>
         </ThemeProvider>
