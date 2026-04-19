@@ -1,36 +1,31 @@
 ---
-title: "Testing React Applications: A Practical Guide"
-publishedAt: "2024-12-14"
-updatedAt: "2024-12-14"
-author: "John Doe"
-summary: "From unit tests to E2E—learn how to build confidence in your React applications with comprehensive testing."
+title: "How I Tracked a Hard-to-Reproduce Dashboard Bug"
+publishedAt: "2026-06-03"
+updatedAt: "2026-06-05"
+author: "Ihtisham Sajjad"
+summary: "A debugging walkthrough on a state-sync issue that only appeared in specific user flows."
 image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=192&fit=crop"
 ---
 
-# Testing React Applications: A Practical Guide
+# How I Tracked a Hard-to-Reproduce Dashboard Bug
 
-Tests are your safety net — they let you refactor with confidence and ship changes without fear. The goal is not “as many tests as possible”; it’s <mark>confidence in the critical paths</mark>.
+In one dashboard, filters randomly reset after navigation. The issue only appeared after a specific flow: apply filter, open item details, then return with browser back.
 
-If your test suite feels slow or fragile, it usually means you’re testing the wrong thing. In practice, you can ignore a lot of “perfect coverage” advice and focus on a few high-signal habits.
+## Debugging steps that helped
 
-## What to test (a simple rule)
+1. Logged state transitions around route changes.
+2. Confirmed where filter state was stored and when it was reset.
+3. Reproduced the issue with a minimal component.
+4. Moved state persistence to URL query params.
 
-- **Unit tests**: small, fast checks for logic and pure functions.
-- **Integration tests**: components + data + user flows (most value per test).
-- **E2E tests**: a few happy-path checks across the whole app.
+## Why it was difficult
 
-## High-signal testing habits
+- The bug did not happen on direct page loads.
+- It depended on browser history behavior.
+- UI looked normal, but state source was stale.
 
-- Prefer user-facing assertions (what the user sees/does).
-- Use accessible queries first (roles, labels).
-- Mock at the boundary (network) instead of mocking implementation details.
+## Result
 
-## Things to avoid
+After persisting filters in query params, navigation became stable and predictable for users.
 
-- ~~Testing internal component state~~ when behavior is what matters.
-- ~~Sprinkling test IDs everywhere~~ as a first choice.
-- Overusing snapshots that fail for harmless UI changes.
-
-## Wrap-up
-
-Start small: one integration test for your most important flow, then add unit tests for tricky logic. Over time, your tests become living documentation that helps you move faster.
+This reminded me that many frontend bugs are state-management bugs disguised as UI issues.

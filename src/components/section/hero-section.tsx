@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DATA } from "@/data/resume";
+import Image from "next/image";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -25,14 +24,16 @@ export default function HeroSection() {
             />
           </div>
           <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2 max-[450px]:self-center">
-            <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-              <AvatarImage
-                alt={DATA.name}
+            <div className="relative size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted overflow-hidden bg-muted">
+              <Image
                 src={DATA.avatarUrl}
+                alt={DATA.name}
+                fill
+                priority
+                sizes="(max-width: 768px) 96px, 128px"
                 className="object-cover object-[center_20%]"
               />
-              <AvatarFallback>{DATA.initials}</AvatarFallback>
-            </Avatar>
+            </div>
           </BlurFade>
         </div>
       </div>

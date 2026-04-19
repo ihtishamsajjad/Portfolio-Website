@@ -1,33 +1,31 @@
 ---
-title: "REST API Design Principles That Stand the Test of Time"
-publishedAt: "2024-12-12"
-updatedAt: "2024-12-12"
-author: "John Doe"
-summary: "Learn how to design APIs that developers love to use and are easy to maintain."
+title: "How I Fixed Role-Based API Issues in Landora"
+publishedAt: "2026-01-12"
+updatedAt: "2026-01-15"
+author: "Ihtisham Sajjad"
+summary: "A real project story about debugging role permissions, inconsistent responses, and API validation in Landora."
 image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=192&fit=crop"
 ---
 
-# REST API Design Principles That Stand the Test of Time
+# How I Fixed Role-Based API Issues in Landora
 
-Great APIs feel boring in the best way: predictable, consistent, and easy to reason about. When the surface area is simple, teams ship faster and clients break less often.
+While building Landora, I faced a difficult bug: agents could access routes meant only for admin users. At first, everything looked correct in middleware, but response handling was inconsistent between routes.
 
-This is a lightweight checklist you can keep in mind while designing new endpoints or reviewing an existing API.
+## What went wrong
 
-## Core principles
+- Some routes checked only authentication, not role.
+- Error responses had different shapes, so frontend handling broke.
+- Validation was applied in controllers, but not at route level.
 
-- Use clear, consistent **resource names** (think nouns).
-- Keep behavior aligned with **HTTP semantics** (read vs write).
-- Return **consistent response shapes** so clients don’t guess.
-- Prefer **sane defaults** with optional query parameters for filtering/sorting.
+## What solved it
 
-## A simple checklist
+1. Added route-level middleware for each permission boundary.
+2. Standardized all API errors into one format.
+3. Added request validation before controller execution.
+4. Added a minimal permission matrix test suite.
 
-1. Pick stable resource paths (plural nouns are a common convention).
-2. Use a small set of status codes consistently.
-3. Document pagination and what “next/previous” means.
-4. Be explicit about authentication and authorization requirements.
-5. Add brief examples in docs for the “happy path” and common errors.
+## Result
 
-## Wrap-up
+After this change, admin and agent dashboards became predictable, and frontend error handling got much simpler.
 
-If you optimize for consistency first, your API will be easier to document, easier to test, and easier for others to adopt.
+The biggest lesson: auth bugs are rarely one line. They are usually a consistency problem across middleware, validation, and response contracts.

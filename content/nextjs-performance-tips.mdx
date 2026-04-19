@@ -1,56 +1,31 @@
 ---
-title: "10 Next.js Performance Tips for Production Apps"
-publishedAt: "2024-12-05"
-updatedAt: "2024-12-05"
-author: "John Doe"
-summary: "Practical optimization techniques to make your Next.js applications blazing fast in production."
+title: "Why My Portfolio Felt Slow and How I Optimized It"
+publishedAt: "2026-04-11"
+updatedAt: "2026-04-14"
+author: "Ihtisham Sajjad"
+summary: "A real-world optimization breakdown: videos, images, hydration, and smoother user experience in Next.js."
 image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=192&fit=crop"
 ---
 
-Performance isn't optional—it's a feature. Here are battle-tested tips for optimizing Next.js apps.
+# Why My Portfolio Felt Slow and How I Optimized It
 
-# 2. Optimize Images
+At one point, my portfolio looked good but loaded slowly on mobile. Videos in project cards and large assets increased first render time.
 
-Always use `next/image`
+## Performance issues I noticed
 
-```tsx
-import Image from 'next/image';
+- Slow initial paint on low-end phones.
+- Heavy media in project cards.
+- Unnecessary client-side logic in sections that could stay static.
 
-export function Hero() {
-  return (
-    <Image
-      src="/hero.jpg"
-      alt="Hero image"
-      width={1200}
-      height={600}
-      priority // Load immediately for LCP
-      placeholder="blur"
-      blurDataURL="data:image/jpeg;base64,..."
-    />
-  );
-}
-```
+## What I changed
 
+1. Moved project media to organized local assets.
+2. Reduced unnecessary re-renders in UI sections.
+3. Kept videos muted, looping, and optimized for inline autoplay.
+4. Used cleaner layout composition to reduce complexity.
 
-## 4. Implement Proper Caching
+## Result
 
-| Strategy | Use Case | TTL |
-|----------|----------|-----|
-| `force-cache` | Static data | Forever |
-| `revalidate: 3600` | Semi-static | 1 hour |
-| `revalidate: 60` | Frequently updated | 1 minute |
-| `no-store` | Real-time data | Never cache |
+The site became smoother on mobile and visually stable when scrolling between sections.
 
-## 5. Minimize Client Components
-
-Every `'use client'` directive adds to your JavaScript bundle. Keep client components small and focused:
-
-## 6. Bundle Analysis
-
-```bash title="terminal"
-# Install analyzer
-npm install @next/bundle-analyzer
-
-# Run analysis
-ANALYZE=true npm run build
-```
+Main lesson: performance work should happen while building, not only at the end before deployment.
